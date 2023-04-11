@@ -1,43 +1,61 @@
-*{
+* {
     box-sizing: border-box;
 }
 
-div.ia21-player{
-    border: 1px solid black;
+html, body{
+    height: 100%;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center
 }
 
-div.ia21-player div.controllers{
-    border-top: 1px solid black;
+div.ia21-player {
     display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    width: 500px;
+}
+
+div.ia21-player video {
+    width: 100%;
+}
+
+div.ia21-player div.controllers {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid black;
     column-gap: 10px;
 }
 
-div.ia21-player div.controllers button.play-pause{
+div.ia21-player div.controllers button.play-pause {
     background-color: transparent;
-    border:none;
+    border: 0 none;
     border-right: 1px solid black;
     cursor: pointer;
 }
 
-div.ia21-player div.controllers div.dragbar{
+div.ia21-player div.controllers div.dragbar {
     flex-grow: 1;
     position: relative;
 }
 
-div.ia21-player div.controllers div.dragbar::before{
+div.ia21-player div.controllers div.dragbar:before {
     content: " ";
     position: absolute;
+    top: calc(50% - .5px);
     border-top: 1px solid black;
     width: 100%;
-    top:calc(50% - .5px)
 }
 
-div.ia21-player div.controllers div.dragbar div.draggable{
-   background-color: black;
-   width: .5rem;
-   height: .5rem;
-   border-radius: 50%;
-   cursor: pointer;
-   position: absolute;
-   top:calc(50% - .25rem)
+div.ia21-player div.controllers div.dragbar div.draggable {
+    background-color: black;
+    width: .5rem;
+    height: .5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    position: absolute;
+    top: calc(50% - .25rem);
+    left: calc(0% - .25rem);
+    transition: all 0.5s;
 }
