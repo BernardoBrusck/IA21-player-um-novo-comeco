@@ -12,8 +12,8 @@
 <body>
     <div class="ia21-player">
         <video>
-            <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4">
-            <source src="https://www.w3schools.com/html/movie.ogg" type="video/ogg">
+            <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+            <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/ogg">
         </video>
         <div class="controllers">
             <button class="play-pause" data-deleteme="||">
@@ -39,21 +39,30 @@
             const video = el.querySelector("video")
             const timeline = el.querySelector(".dragbar.timeline")
             const timelineDrag = timeline.querySelector(".draggable")
+            const timer = el.querySelector("div.timer")
 
             playPause.addEventListener("click", () => {
                 if (video.paused) {
                     video.play();
-                    playPause.innerHTML = "⏸️";
+                    playPause.innerHTML = "||";
                 } else {
                     video.pause();
                     playPause.innerHTML = "▶";
                 }
             });
+             
+            video.currentTime = 50
 
             video.addEventListener("timeupdate", () => {
                 const percent = video.currentTime / video.duration * 100
-                console.log(percent)
                 timelineDrag.style.left = "calc(" + percent + "% - .25rem)"
+
+                const minutos = Math.floor(video.currentTime / 60);
+                const segundos = Math.floor(video.currentTime % 60);
+                const min = String(minutos).padStart(2, '0');
+                const seg = String(segundos).padStart(2, '0');
+                const timeString = `${min}:${seg}`;
+                timer.innerText = timeString;
             })
         })
     </script>
