@@ -57,5 +57,5 @@ div.ia21-player div.controllers div.dragbar div.draggable {
     position: absolute;
     top: calc(50% - .25rem);
     left: calc(0% - .25rem);
-    transition: all 0.5s;
+    transition: all 0.4s;
 }
