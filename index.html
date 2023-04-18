@@ -12,12 +12,15 @@
 <body>
     <div class="ia21-player">
         <video>
-            <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
-            <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/ogg">
+            <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                type="video/mp4">
+            <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                type="video/ogg">
         </video>
         <div class="controllers">
-            <button class="play-pause" data-deleteme="||">
-                ▶
+            <button class="play-pause">
+                <img src="https://cdn.discordapp.com/attachments/977933870467018792/1097886816578834613/botao-play-ponta-de-seta.png"
+                    width="10">
             </button>
             <div class="dragbar timeline">
                 <div class="draggable"></div>
@@ -44,14 +47,12 @@
             playPause.addEventListener("click", () => {
                 if (video.paused) {
                     video.play();
-                    playPause.innerHTML = "||";
+                    playPause.querySelector("img").setAttribute("src", "https://cdn.discordapp.com/attachments/977933870467018792/1097886816788566117/pausa.png");
                 } else {
                     video.pause();
-                    playPause.innerHTML = "▶";
+                    playPause.querySelector("img").setAttribute("src", "https://cdn.discordapp.com/attachments/977933870467018792/1097886816578834613/botao-play-ponta-de-seta.png");
                 }
             });
-             
-            video.currentTime = 50
 
             video.addEventListener("timeupdate", () => {
                 const percent = video.currentTime / video.duration * 100
@@ -63,6 +64,12 @@
                 const seg = String(segundos).padStart(2, '0');
                 const timeString = `${min}:${seg}`;
                 timer.innerText = timeString;
+            })
+
+            const dragbars = el.querySelectorAll(".dragbar")
+
+            dragbars.forEach(dragbar => {
+                const dragable 
             })
         })
     </script>
