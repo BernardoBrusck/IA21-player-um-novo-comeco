@@ -1,24 +1,155 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Title</title>
-    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <meta charset="utf8">
+    <title>Player</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            background-color: #f2f2f2;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        div.ia21-player {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #ddd;
+            width: 1000px;
+            margin: 50px auto;
+            background-color: #fff;
+            box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+        }
+
+        div.ia21-player video {
+            width: 100%;
+            height: 180%;
+            object-fit: cover;
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+        }
+
+        div.ia21-player div.controllers {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid #ddd;
+            padding: 8px;
+            background-color: #f2f2f2;
+            border-bottom-left-radius: 6px;
+            border-bottom-right-radius: 6px;
+        }
+
+        div.ia21-player div.controllers button.play-pause {
+            border: none;
+            cursor: pointer;
+        }
+
+        div.ia21-player div.controllers button.play-pause img {
+            width: 24px;
+            height: 24px;
+            opacity: 0.8;
+        }
+
+        div.ia21-player div.controllers div.dragbar {
+            flex-grow: 1;
+            position: relative;
+            height: 6px;
+            margin: 0 16px;
+            background-color: #ddd;
+            border-radius: 3px;
+        }
+
+        div.ia21-player div.controllers div.dragbar:before {
+            content: " ";
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 0;
+            height: 2px;
+            width: 100%;
+            background-color: #666;
+        }
+
+        div.ia21-player div.controllers div.dragbar div.draggable {
+            --percent: 0%;
+            background-color: #666;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            left: var(--percent);
+        }
+
+        div.ia21-player div.controllers div.timer {
+            font-size: 14px;
+            font-weight: bold;
+            color: #666;
+            text-align: right;
+            min-width: 40px;
+            font-family: 'Bruno Ace SC', cursive;
+            width: 50px;
+            margin-right: 15px;
+        }
+
+        .
+
+        div.ia21-player div.controllers div.volume {
+            width: 20px;
+        }
+
+        div.ia21-player div.controllers div.volume div.draggable {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #666;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            left: var(--percent);
+        }
+
+        div.ia21-player div.controllers div.volume div.draggable:after {
+            content: " ";
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            right: -6px;
+            bottom: -6px;
+            border-radius: 50%;
+            border: 2px solid #ddd;
+        }
+    </style>
 </head>
 
 <body>
+
     <div class="ia21-player">
         <video>
+            <!-- https://gist.github.com/jsturgis/3b19447b304616f18657 -->
             <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
                 type="video/mp4">
-            <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-                type="video/ogg">
         </video>
         <div class="controllers">
-            <button class="play-pause">
+            <button class="play-pause" data-pause-icon="⏸" data-play-icon="▶">
                 <img src="https://cdn.discordapp.com/attachments/977933870467018792/1097886816578834613/botao-play-ponta-de-seta.png"
                     width="10">
             </button>
@@ -28,6 +159,7 @@
             <div class="timer">
                 00:00
             </div>
+            <img src="https://media.discordapp.net/attachments/977933870467018792/1100479361079066795/aumentar-o-volume_2.png" width="30">
             <div class="dragbar volume">
                 <div class="draggable"></div>
             </div>
@@ -37,12 +169,12 @@
     <script>
         const containers = document.querySelectorAll("div.ia21-player")
 
-        containers.forEach(el => {
-            const playPause = el.querySelector("button.play-pause")
-            const video = el.querySelector("video")
-            const timeline = el.querySelector(".dragbar.timeline")
+        containers.forEach(container => {
+            const playPause = container.querySelector("button.play-pause")
+            const video = container.querySelector("video")
+            const timeline = container.querySelector(".dragbar.timeline")
             const timelineDrag = timeline.querySelector(".draggable")
-            const timer = el.querySelector("div.timer")
+            const timer = container.querySelector(".timer")
 
             playPause.addEventListener("click", () => {
                 if (video.paused) {
@@ -53,6 +185,12 @@
                     playPause.querySelector("img").setAttribute("src", "https://cdn.discordapp.com/attachments/977933870467018792/1097886816578834613/botao-play-ponta-de-seta.png");
                 }
             });
+
+            video.addEventListener("timeupdate", () => {
+                const percent = (video.currentTime / video.duration) * 100
+                timelineDrag.style.setProperty("--percent", `${percent}%`)
+                timer.innerText = Math.floor(video.currentTime)
+            })
 
             video.addEventListener("timeupdate", () => {
                 const percent = video.currentTime / video.duration * 100
@@ -66,10 +204,61 @@
                 timer.innerText = timeString;
             })
 
-            const dragbars = el.querySelectorAll(".dragbar")
+            // ---✀------------------------------------------------------
+
+            const dragbars = container.querySelectorAll(".dragbar")
 
             dragbars.forEach(dragbar => {
-                const dragable 
+                const dragabble = dragbar.querySelector(".draggable")
+
+                if (dragbar.classList.contains("volume")) {
+                    dragabble.style.setProperty("--percent", `100%`)
+                }
+
+                dragbar.addEventListener("mousedown", ev => {
+                    dragbar.classList.add("dragging")
+                })
+
+                dragbar.addEventListener("mouseup", ev => {
+                    dragbar.classList.remove("dragging")
+                })
+
+                dragbar.addEventListener("mouseout", ev => {
+                    dragbar.classList.remove("dragging")
+                })
+
+                dragbar.addEventListener("mousemove", ev => {
+                    if (ev.target != dragbar || !dragbar.classList.contains("dragging"))
+                        return
+
+                    const width = Math.floor(dragbar.getBoundingClientRect().width)
+                    const index = (ev.offsetX / width)
+                    const percent = index * 100
+
+                    dragabble.style.setProperty("--percent", `${percent}%`)
+                })
+
+
+                dragbar.addEventListener("mouseup", ev => {
+                    if (ev.target != dragbar)
+                        return
+
+                    const width = Math.floor(dragbar.getBoundingClientRect().width)
+                    const index = (ev.offsetX / width)
+                    const percent = index * 100
+
+                    dragabble.style.setProperty("--percent", `${percent}%`)
+
+                    if (dragbar.classList.contains("timeline")) {
+                        video.currentTime = video.duration * index
+                        return
+                    }
+
+                    if (dragbar.classList.contains("volume")) {
+                        video.volume = index
+                        return
+                    }
+                })
             })
         })
     </script>
