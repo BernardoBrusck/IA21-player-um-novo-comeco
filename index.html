@@ -1,267 +1,198 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 
 <head>
-    <meta charset="utf8">
-    <title>Player</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vídeo Player</title>
+    <link rel="stylesheet" href="main.css">
+    <!-- fonte -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&display=swap" rel="stylesheet">
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html,
-        body {
-            background-color: #f2f2f2;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        div.ia21-player {
-            display: flex;
-            flex-direction: column;
-            border: 1px solid #ddd;
-            width: 1000px;
-            margin: 50px auto;
-            background-color: #fff;
-            box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 6px;
-        }
-
-        div.ia21-player video {
-            width: 100%;
-            height: 180%;
-            object-fit: cover;
-            border-top-left-radius: 6px;
-            border-top-right-radius: 6px;
-        }
-
-        div.ia21-player div.controllers {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-top: 1px solid #ddd;
-            padding: 8px;
-            background-color: #f2f2f2;
-            border-bottom-left-radius: 6px;
-            border-bottom-right-radius: 6px;
-        }
-
-        div.ia21-player div.controllers button.play-pause {
-            border: none;
-            cursor: pointer;
-        }
-
-        div.ia21-player div.controllers button.play-pause img {
-            width: 24px;
-            height: 24px;
-            opacity: 0.8;
-        }
-
-        div.ia21-player div.controllers div.dragbar {
-            flex-grow: 1;
-            position: relative;
-            height: 6px;
-            margin: 0 16px;
-            background-color: #ddd;
-            border-radius: 3px;
-        }
-
-        div.ia21-player div.controllers div.dragbar:before {
-            content: " ";
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            left: 0;
-            height: 2px;
-            width: 100%;
-            background-color: #666;
-        }
-
-        div.ia21-player div.controllers div.dragbar div.draggable {
-            --percent: 0%;
-            background-color: #666;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            cursor: pointer;
-            position: absolute;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            left: var(--percent);
-        }
-
-        div.ia21-player div.controllers div.timer {
-            font-size: 14px;
-            font-weight: bold;
-            color: #666;
-            text-align: right;
-            min-width: 40px;
-            font-family: 'Bruno Ace SC', cursive;
-            width: 50px;
-            margin-right: 15px;
-        }
-
-        .
-
-        div.ia21-player div.controllers div.volume {
-            width: 20px;
-        }
-
-        div.ia21-player div.controllers div.volume div.draggable {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: #666;
-            cursor: pointer;
-            position: absolute;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            left: var(--percent);
-        }
-
-        div.ia21-player div.controllers div.volume div.draggable:after {
-            content: " ";
-            position: absolute;
-            top: -6px;
-            left: -6px;
-            right: -6px;
-            bottom: -6px;
-            border-radius: 50%;
-            border: 2px solid #ddd;
-        }
-    </style>
 </head>
 
 <body>
-
-    <div class="ia21-player">
+    <div class="player">
         <video>
             <!-- https://gist.github.com/jsturgis/3b19447b304616f18657 -->
             <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
                 type="video/mp4">
         </video>
-        <div class="controllers">
-            <button class="play-pause" data-pause-icon="⏸" data-play-icon="▶">
-                <img src="https://cdn.discordapp.com/attachments/977933870467018792/1097886816578834613/botao-play-ponta-de-seta.png"
-                    width="10">
-            </button>
-            <div class="dragbar timeline">
-                <div class="draggable"></div>
+        <div class="player_controller">
+            <div class="barra_rolagem">
+                <div class="boll video"></div>
+                <div class="progresso video"></div>
             </div>
-            <div class="timer">
-                00:00
-            </div>
-            <img src="https://media.discordapp.net/attachments/977933870467018792/1100479361079066795/aumentar-o-volume_2.png" width="30">
-            <div class="dragbar volume">
-                <div class="draggable"></div>
+
+            <div class="botton_controller">
+                <div class="d_play">
+                    <button id="play-pause" class="playpause">
+                        <img src="https://cdn.discordapp.com/attachments/977933870467018792/1102600588233019502/play-button-arrowhead.png"
+                            width="20px">
+                    </button>
+
+                    <h4 class="timer">00:00</h4>
+                </div>
+
+                <div class="d_volume">
+                    <img src="https://cdn.discordapp.com/attachments/977933870467018792/1102602255426912296/medium-volume.png"
+                        width="25px">
+                    <div class="barra_volume">
+                        <div class="progresso progvolume"></div>
+                        <div class="boll volume"></div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <script>
-        const containers = document.querySelectorAll("div.ia21-player")
+        <script>
+            const playpause = document.getElementById("play-pause");
+            const video = document.querySelector("video");
+            const timer = document.querySelector(".timer");
+            const playerController = document.querySelector('.player_controller');
+            let timeoutId;
+            const barra_rolagem = document.querySelector(".barra_rolagem");
 
-        containers.forEach(container => {
-            const playPause = container.querySelector("button.play-pause")
-            const video = container.querySelector("video")
-            const timeline = container.querySelector(".dragbar.timeline")
-            const timelineDrag = timeline.querySelector(".draggable")
-            const timer = container.querySelector(".timer")
 
-            playPause.addEventListener("click", () => {
+            function hidePlayerController() {
+                playerController.style.display = 'none';
+                document.body.style.cursor = "none";
+            }
+
+            function showPlayerController() {
+                playerController.style.display = 'block';
+                document.body.style.cursor = "auto";
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(hidePlayerController, 3000);
+            }
+
+            video.addEventListener('mousemove', showPlayerController);
+
+            document.addEventListener('keydown', function (event) {
+                if (event.code === 'Space') {
+                    showPlayerController();
+                }
+            });
+
+            playpause.addEventListener("click", function () {
                 if (video.paused) {
                     video.play();
-                    playPause.querySelector("img").setAttribute("src", "https://cdn.discordapp.com/attachments/977933870467018792/1097886816788566117/pausa.png");
+                    playpause.querySelector("img").src = "https://cdn.discordapp.com/attachments/977933870467018792/1102600588497276948/pause.png"
                 } else {
                     video.pause();
-                    playPause.querySelector("img").setAttribute("src", "https://cdn.discordapp.com/attachments/977933870467018792/1097886816578834613/botao-play-ponta-de-seta.png");
+                    playpause.querySelector("img").src = "https://cdn.discordapp.com/attachments/977933870467018792/1102600588233019502/play-button-arrowhead.png"
+                }
+            });
+
+            video.addEventListener("click", function () {
+                if (video.paused) {
+                    video.play();
+                    playpause.querySelector("img").src = "https://cdn.discordapp.com/attachments/977933870467018792/1102600588497276948/pause.png"
+                } else {
+                    video.pause();
+                    playpause.querySelector("img").src = "https://cdn.discordapp.com/attachments/977933870467018792/1102600588233019502/play-button-arrowhead.png"
+                }
+            });
+
+            document.addEventListener("keydown", function (event) {
+                if (event.code === "Space") {
+                    if (video.paused) {
+                        video.play();
+                        playpause.querySelector("img").src = "https://cdn.discordapp.com/attachments/977933870467018792/1102600588497276948/pause.png";
+                    } else {
+                        video.pause();
+                        playpause.querySelector("img").src = "https://cdn.discordapp.com/attachments/977933870467018792/1102600588233019502/play-button-arrowhead.png";
+                    }
                 }
             });
 
             video.addEventListener("timeupdate", () => {
-                const percent = (video.currentTime / video.duration) * 100
-                timelineDrag.style.setProperty("--percent", `${percent}%`)
-                timer.innerText = Math.floor(video.currentTime)
-            })
-
-            video.addEventListener("timeupdate", () => {
-                const percent = video.currentTime / video.duration * 100
-                timelineDrag.style.left = "calc(" + percent + "% - .25rem)"
-
                 const minutos = Math.floor(video.currentTime / 60);
                 const segundos = Math.floor(video.currentTime % 60);
                 const min = String(minutos).padStart(2, '0');
                 const seg = String(segundos).padStart(2, '0');
                 const timeString = `${min}:${seg}`;
                 timer.innerText = timeString;
+
+                const boll_video = document.querySelector(".boll.video")
+                const barra_video = document.querySelector(".progresso.video")
+                const percent = (video.currentTime / video.duration) * 100
+
+                boll_video.style.left = percent + "%";
+                barra_video.style.width = percent + "%";
             })
 
-            // ---✀------------------------------------------------------
+            barra_rolagem.addEventListener('click', function (e) {
+                const barra_pos = this.getBoundingClientRect();
+                const click_pos = e.clientX - barra_pos.left;
+                const percent = click_pos / this.offsetWidth;
+                video.currentTime = percent * video.duration;
+            });
 
-            const dragbars = container.querySelectorAll(".dragbar")
+            const barra_volume = document.querySelector(".barra_volume");
+            const boll_volume = document.querySelector(".boll.volume");
 
-            dragbars.forEach(dragbar => {
-                const dragabble = dragbar.querySelector(".draggable")
+            barra_volume.addEventListener("click", function (e) {
+                const barra_pos = this.getBoundingClientRect();
+                const click_pos = e.clientX - barra_pos.left;
+                const percent = click_pos / this.offsetWidth;
+                const boll_volume = document.querySelector(".volume")
+                const barra_volume = document.querySelector(".progvolume")
 
-                if (dragbar.classList.contains("volume")) {
-                    dragabble.style.setProperty("--percent", `100%`)
+                video.volume = percent;
+                boll_volume.style.left = percent * 100 + "%";
+                barra_volume.style.width = percent * 100 + "%";
+                console.log(percent)
+            });
+
+            document.addEventListener('keydown', (event) => {
+                switch (event.keyCode) {
+                    case 37: // seta da esquerda
+                        video.currentTime -= 5;
+                        break;
+                    case 39: // seta da direita
+                        video.currentTime += 5;
+                        break;
+                    default:
+                        break;
                 }
+            });
 
-                dragbar.addEventListener("mousedown", ev => {
-                    dragbar.classList.add("dragging")
-                })
+            const boll_video = document.querySelector('.boll.video');
+            const barra_video = document.querySelector(".progresso.video")
+            let seguindo_mouse = false;
 
-                dragbar.addEventListener("mouseup", ev => {
-                    dragbar.classList.remove("dragging")
-                })
+            barra_rolagem.addEventListener('mousedown', function (e) {
+                seguindo_mouse = true;
+                const barra_pos = this.getBoundingClientRect();
+                const click_pos = e.clientX - barra_pos.left;
+                const percent = click_pos / this.offsetWidth;
+                boll_video.style.left = percent * 100 + '%';
+                barra_video.style.width = percent * 100 + "%";
+                video.currentTime = percent * video.duration;
+            });
 
-                dragbar.addEventListener("mouseout", ev => {
-                    dragbar.classList.remove("dragging")
-                })
+            document.addEventListener('mousemove', function (e) {
+                if (seguindo_mouse) {
+                    const barra_pos = barra_rolagem.getBoundingClientRect();
+                    const click_pos = e.clientX - barra_pos.left;
+                    const percent = click_pos / barra_rolagem.offsetWidth;
+                    boll_video.style.left = percent * 100 + '%';
+                    barra_video.style.width = percent * 100 + "%";
+                    video.currentTime = percent * video.duration;
+                }
+            });
 
-                dragbar.addEventListener("mousemove", ev => {
-                    if (ev.target != dragbar || !dragbar.classList.contains("dragging"))
-                        return
+            const progvolume = document.querySelector(".progvolume")
 
-                    const width = Math.floor(dragbar.getBoundingClientRect().width)
-                    const index = (ev.offsetX / width)
-                    const percent = index * 100
+            document.addEventListener('mouseup', function (e) {
+                seguindo_mouse = false;
+            });
+        </script>
 
-                    dragabble.style.setProperty("--percent", `${percent}%`)
-                })
-
-
-                dragbar.addEventListener("mouseup", ev => {
-                    if (ev.target != dragbar)
-                        return
-
-                    const width = Math.floor(dragbar.getBoundingClientRect().width)
-                    const index = (ev.offsetX / width)
-                    const percent = index * 100
-
-                    dragabble.style.setProperty("--percent", `${percent}%`)
-
-                    if (dragbar.classList.contains("timeline")) {
-                        video.currentTime = video.duration * index
-                        return
-                    }
-
-                    if (dragbar.classList.contains("volume")) {
-                        video.volume = index
-                        return
-                    }
-                })
-            })
-        })
-    </script>
+    </div>
 </body>
 
 </html>
